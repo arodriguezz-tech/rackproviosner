@@ -1,3 +1,8 @@
+"""Inventory use cases and inventory-related event publication.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 class InventoryService:
     def __init__(self,repo,bus,settings): self.repo=repo; self.bus=bus; self.settings=settings
     def save_record(self,rack,devices): self.repo.save(rack,devices); self.bus.publish("inventory.saved",rack_serial=rack["rack_serial"])

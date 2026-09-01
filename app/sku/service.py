@@ -1,3 +1,8 @@
+"""SKU revision classification, archive creation, and persistence.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 import hashlib,json,tarfile,tempfile
 from pathlib import Path
 from app.core.database import app_connection,now

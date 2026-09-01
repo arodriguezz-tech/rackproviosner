@@ -1,3 +1,8 @@
+"""Syntax highlighting rules for SONiC and shell configuration editors.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from PySide6.QtCore import QRegularExpression
 from PySide6.QtGui import QColor,QFont,QSyntaxHighlighter,QTextCharFormat
 class ShellHighlighter(QSyntaxHighlighter):

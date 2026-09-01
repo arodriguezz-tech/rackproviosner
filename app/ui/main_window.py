@@ -1,3 +1,8 @@
+"""Top-level navigation and engineer-mode visibility.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from PySide6.QtWidgets import QMainWindow,QTabWidget,QWidget,QVBoxLayout,QLabel,QTableWidget,QTableWidgetItem,QHeaderView
 from app.ui.pages.single_switch import SingleSwitchPage
 from app.ui.pages.inventory import InventoryPage

@@ -1,3 +1,8 @@
+"""Application settings and local inventory builder UI.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QFormLayout,QCheckBox,QComboBox,QGroupBox,QLineEdit,QHBoxLayout,QLabel,QPushButton,QMessageBox
 class SettingsPage(QWidget):
     def __init__(self,settings,inventory,bus):

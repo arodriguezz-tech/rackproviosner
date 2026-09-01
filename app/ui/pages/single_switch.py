@@ -1,3 +1,8 @@
+"""Single-switch discovery workflow UI.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QFormLayout,QGroupBox,QComboBox,QLineEdit,QPushButton,QLabel,QProgressBar,QPlainTextEdit,QSplitter
 class SingleSwitchPage(QWidget):
@@ -12,7 +17,7 @@ class SingleSwitchPage(QWidget):
         for title,w in [("Console",self.console),("Action Output",self.actions)]: b=QGroupBox(title); q=QVBoxLayout(b); q.addWidget(w); sp.addWidget(b)
         l.addWidget(sp,1); self.refresh.clicked.connect(self.refresh_ports); self.connect.clicked.connect(self.toggle); self.discover.clicked.connect(self.start); self.lldp.clicked.connect(self.discovery.lldp_only)
     def _subscribe(self):
-        self.bus.subscribe("console.received",lambda e:self.console.insertPlainText(e.payload["text"])); self.bus.subscribe("serial.connected",self.on_connected); self.bus.subscribe("serial.disconnected",lambda e:self.on_connected(e)); self.bus.subscribe("serial.command.started",lambda e:self.log("Running: "+e.payload["command"])); self.bus.subscribe("serial.error",lambda e:self.log("Serial error: "+e.payload["message"])); self.bus.subscribe("discovery.started",lambda e:self.set_stage("Discovery: Running",20)); self.bus.subscribe("discovery.command.completed",lambda e:self.set_stage("Discovery: "+e.payload["command"]+" complete",min(80,self.progress.value()+20))); self.bus.subscribe("discovery.completed",self.completed); self.bus.subscribe("inventory.verified",lambda e:self.log(f"Inventory: {e.payload['state']} - {e.payload['reason']}"))
+        self.bus.subscribe("console.received",lambda e:self.console.insertPlainText(e.payload["text"])); self.bus.subscribe("serial.connected",self.on_connected); self.bus.subscribe("serial.disconnected",lambda e:self.on_connected(e)); self.bus.subscribe("serial.command.started",lambda e:self.log("Running: "+e.payload["command"])); self.bus.subscribe("serial.error",lambda e:self.log("Serial error: "+e.payload["message"])); self.bus.subscribe("serial.blocked",lambda e:self.log("BLOCKED: "+e.payload["reason"])); self.bus.subscribe("discovery.started",lambda e:self.set_stage("Discovery: Running",20)); self.bus.subscribe("discovery.command.completed",lambda e:self.set_stage("Discovery: "+e.payload["command"]+" complete",min(80,self.progress.value()+20))); self.bus.subscribe("discovery.completed",self.completed); self.bus.subscribe("lldp.completed",self.lldp_completed); self.bus.subscribe("inventory.verified",lambda e:self.log(f"Inventory: {e.payload['state']} - {e.payload['reason']}"))
     def refresh_ports(self): self.port.clear(); self.port.addItems(self.discovery.ports())
     def toggle(self):
         if self.discovery.session.port.isOpen(): self.discovery.disconnect()
@@ -26,5 +31,11 @@ class SingleSwitchPage(QWidget):
         self.result=e.payload["result"]; i=self.result.identity; self.log(f"Identity: serial={i.serial or '?'} MAC={i.mac or '?'} model={i.model or '?'}"); self.log(f"LLDP parsed: {len(self.result.neighbors)} neighbor(s)")
         for n in self.result.neighbors: self.log(f"{n.local_port} -> {n.neighbor_mac or n.neighbor_name or '?'} remote-port={n.neighbor_port or '?'}")
         state,role,reason=self.inventory.verify(self.rack_serial.text().strip(),i); ready=state in ("VERIFIED","DISABLED"); self.role.setText("Role: "+(role or state)); self.set_stage("Discovery: Complete" if ready else "Discovery: BLOCKED",100 if ready else 90)
+    def lldp_completed(self,e):
+        neighbors=e.payload["neighbors"]
+        self.log(f"LLDP parsed: {len(neighbors)} neighbor(s)")
+        for n in neighbors:
+            self.log(f"{n.local_port} -> {n.neighbor_mac or n.neighbor_name or '?'} remote-port={n.neighbor_port or '?'}")
+
     def set_stage(self,text,value): self.status.setText(text); self.progress.setValue(value)
     def log(self,text): self.actions.appendPlainText(text)

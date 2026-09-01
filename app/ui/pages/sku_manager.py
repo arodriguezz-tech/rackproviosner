@@ -1,3 +1,8 @@
+"""Engineer-facing SKU configuration editors.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QComboBox,QLineEdit,QPushButton,QLabel,QTabWidget,QPlainTextEdit,QMessageBox
 from app.ui.highlighter import ShellHighlighter

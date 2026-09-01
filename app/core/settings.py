@@ -1,3 +1,8 @@
+"""Typed access wrapper for settings.ini.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 import configparser
 from .paths import SETTINGS
 

@@ -1,3 +1,8 @@
+"""Read-only inventory lookup UI.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLineEdit,QPushButton,QLabel,QTableWidget,QTableWidgetItem,QHeaderView
 class InventoryPage(QWidget):
     def __init__(self,repo):

@@ -1,24 +1,27 @@
-# Rack Provisioner Alpha v2
+# Rack Provisioner Alpha v2.1
 
-Alpha v2 reorganizes the prototype into modules with an in-process event bus.
+Alpha v2.1 focuses on maintainability and logical code navigation.
 
-## Modules
-- `app/core`: paths, settings, SQLite initialization, event bus
-- `app/domain`: shared dataclasses
-- `app/discovery`: serial transport, identity parsing, LLDP parsing, discovery orchestration
-- `app/inventory`: inventory repository and identity verification service
-- `app/sku`: SKU persistence, revision classification, checksums, tar.gz archive service
-- `app/ui`: window, pages, and syntax highlighting
+## Improvements
 
-## Event flow
-`SerialSession -> DiscoveryService -> EventBus -> UI / InventoryService`
+- Consistent module headers and docstrings
+- Central event constants in `app/core/event_names.py`
+- Documented dependency rules in `ARCHITECTURE.md`
+- Complete event reference in `EVENT_CATALOG.md`
+- Clearer discovery state machine
+- Fixed LLDP-only workflow so it publishes `lldp.completed` instead of a full discovery result
+- Removed duplicate discovery completion logic
+- Preserved modular services, repositories, UI pages, SQLite, SKU revisions, and archives
 
-Key events include `serial.connected`, `serial.command.started`, `serial.command.finished`, `discovery.started`, `discovery.command.completed`, `discovery.completed`, `inventory.verified`, `sku.revision.saved`, and `settings.changed`.
+## Start points
 
-## Safety
-Apply remains locked. Only read-only discovery commands are sent in the alpha.
+1. Read `ARCHITECTURE.md`.
+2. Open `app/bootstrap.py` to see how modules connect.
+3. Open `app/core/event_names.py` to see inter-module messages.
+4. Open `app/discovery/service.py` for the primary workflow example.
 
 ## Run
+
 ```bash
 python -m venv .venv
 # Windows: .venv\Scripts\activate
@@ -27,7 +30,4 @@ pip install -r requirements.txt
 python main.py
 ```
 
-## Tests
-```bash
-python -m pytest
-```
+The Apply button remains intentionally locked for alpha safety.

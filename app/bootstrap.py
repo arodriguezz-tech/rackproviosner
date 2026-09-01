@@ -1,3 +1,8 @@
+"""Application composition root. Creates services and injects dependencies.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 import sys
 from dataclasses import dataclass
 from PySide6.QtWidgets import QApplication

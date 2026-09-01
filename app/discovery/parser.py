@@ -1,3 +1,8 @@
+"""Parses device identity from collected read-only command output.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 import re
 from app.domain.models import DeviceIdentity
 class IdentityParser:

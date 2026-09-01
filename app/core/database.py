@@ -1,3 +1,8 @@
+"""SQLite connection factories and schema initialization.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 import sqlite3
 from datetime import datetime, timezone
 from .paths import DATA

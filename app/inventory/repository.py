@@ -1,3 +1,8 @@
+"""Inventory persistence and normalized identity lookup.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from app.core.database import inventory_connection, now
 def norm_serial(v): return "".join(v.strip().upper().split())
 def norm_mac(v): return "".join(ch for ch in v.upper() if ch in "0123456789ABCDEF")

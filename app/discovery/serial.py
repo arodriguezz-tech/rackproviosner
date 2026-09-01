@@ -1,3 +1,8 @@
+"""Qt serial transport. Contains no inventory, SKU, or UI logic.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from PySide6.QtCore import QObject,Signal,QTimer,QIODevice
 from PySide6.QtSerialPort import QSerialPort,QSerialPortInfo
 class SerialSession(QObject):

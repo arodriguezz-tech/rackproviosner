@@ -1,3 +1,8 @@
+"""Synchronous in-process event bus used for module communication.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timezone

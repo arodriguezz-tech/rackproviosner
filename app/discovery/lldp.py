@@ -1,3 +1,8 @@
+"""Parser for SONiC show lldp neighbors output.
+
+Layer rule: this module should depend only on lower-level modules documented in ARCHITECTURE.md.
+"""
+
 import re
 from app.domain.models import LldpNeighbor
 from app.inventory.repository import norm_mac
