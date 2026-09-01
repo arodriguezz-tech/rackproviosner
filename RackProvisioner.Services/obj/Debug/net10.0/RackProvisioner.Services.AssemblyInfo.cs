@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RackProvisioner.Services")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+941fa055293cbf139b97e6673e4d43c1fae2222f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fb67f7dd3fa26e30695c97b20c926be6b238da1")]
 [assembly: System.Reflection.AssemblyProductAttribute("RackProvisioner.Services")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RackProvisioner.Services")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
