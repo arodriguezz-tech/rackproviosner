@@ -1,0 +1,41 @@
+@inject RackProvisioner.UI.ReadinessViewModel ViewModel
+
+<div class="card m-2">
+  <div class="card-body">
+    <h5 class="card-title">Readiness</h5>
+    <p>
+      <strong>Status:</strong>
+      <span class="ms-2">@ViewModel.Status</span>
+    </p>
+
+    @if (ViewModel.Status == "Ready")
+    {
+        <div class="alert alert-success">✅ Rack is READY for provisioning.</div>
+    }
+    else if (ViewModel.Status == "Unknown")
+    {
+        <div class="alert alert-secondary">Status unknown.</div>
+    }
+    else
+    {
+        <div class="alert alert-danger">⚠️ Provisioning is BLOCKED</div>
+        <button class="btn btn-primary mb-2" @onclick="ShowExplanation">Why?</button>
+
+        @if (!string.IsNullOrEmpty(ViewModel.Explanation))
+        {
+            <div class="mt-2">
+                <h6>Explanation</h6>
+                <pre>@ViewModel.Explanation</pre>
+            </div>
+        }
+    }
+  </div>
+</div>
+
+@code {
+    private async Task ShowExplanation()
+    {
+        await ViewModel.RefreshExplanationAsync();
+        // Blazor will re-render automatically because ViewModel is a singleton; components will update when bound data changes
+    }
+}
