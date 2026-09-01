@@ -1,2 +1,4 @@
-..........................................................               [100%]
-58 passed in 4.34s
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                                               [100%][0m
+[36m[1m=========================== short test summary info ============================[0m
+[33mSKIPPED[0m [1] tests/test_readiness_panel_ui.py:9: could not import 'PySide6': No module named 'PySide6'
+[32m[32m[1m10 passed[0m, [33m1 skipped[0m[32m in 0.08s[0m[0m

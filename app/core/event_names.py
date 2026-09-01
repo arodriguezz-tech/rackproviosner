@@ -1,9 +1,4 @@
-SERIAL_CONNECTED="serial.connected"
-SERIAL_COMMAND_FINISHED="serial.command.finished"
-DISCOVERY_COMPLETED="discovery.completed"
-LLDP_COMPLETED="lldp.completed"
-INVENTORY_SAVED="inventory.saved"
-INVENTORY_VERIFIED="inventory.verified"
-SKU_REVISION_SAVED="sku.revision.saved"
-SETTINGS_CHANGED="settings.changed"
-READINESS_EVALUATED="readiness.evaluated"
+"""Canonical event names used by readiness UI integration."""
+
+READINESS_EVALUATED = "readiness.evaluated"
+SETTINGS_CHANGED = "settings.changed"

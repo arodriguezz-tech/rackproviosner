@@ -1,12 +1,23 @@
-# Rack Provisioner Alpha v3 Test Lab
+# Alpha v3 Readiness UI Starter
 
-A hardware-free test harness with test devices for Nokia 7215 IXS, SN4700,
-SN2700, and Arista H20. It tests all currently implemented non-UI functions:
-EventBus/contracts, InventoryRepository, InventoryService, identity parsing,
-LLDP parsing, DiscoveryService, Readiness rules/service, and SKU revisions/archive.
+Included:
 
-Run: `python -m pytest -q`
+- User-friendly PySide6 `ReadinessPanel`
+- Technician and Engineer Mode rendering
+- Readiness event subscription
+- Provisioning-button safety gate
+- Headless presenter tests
+- pytest-qt widget tests
+- Integration notes
 
-PySide6 is not installed in this execution environment, so actual Qt widget tests
-are not in this run. UI behavior should be tested separately with pytest-qt in an
-environment that has PySide6 installed.
+## Install and run tests
+
+```bash
+pip install -e ".[test]"
+export QT_QPA_PLATFORM=offscreen   # Linux CI
+python -m pytest -q
+```
+
+The current execution environment did not contain PySide6 or pytest-qt, so the
+headless presenter tests were executed here while widget tests were collected as
+conditional UI tests for a Qt-enabled environment.
