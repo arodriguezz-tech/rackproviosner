@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "U9VKKyNtTlw=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.UI\\RackProvisioner.UI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alex\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.11\\microsoft.aspnetcore.app.internal.assets.10.0.11.nupkg.sha512"
+  ],
+  "logs": []
+}

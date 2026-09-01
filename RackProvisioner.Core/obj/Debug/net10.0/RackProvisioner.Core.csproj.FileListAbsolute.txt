@@ -1,0 +1,13 @@
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\bin\Debug\net10.0\RackProvisioner.Core.deps.json
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\bin\Debug\net10.0\RackProvisioner.Core.dll
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\bin\Debug\net10.0\RackProvisioner.Core.pdb
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\RackProvisioner.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\RackProvisioner.Core.AssemblyInfoInputs.cache
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\RackProvisioner.Core.AssemblyInfo.cs
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\RackProvisioner.Core.csproj.CoreCompileInputs.cache
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\RackProvisioner.Core.sourcelink.json
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\RackProvisioner.Core.dll
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\refint\RackProvisioner.Core.dll
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\RackProvisioner.Core.pdb
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\ref\RackProvisioner.Core.dll
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Core\obj\Debug\net10.0\RackProvisioner.Core.csproj.AssemblyReference.cache
