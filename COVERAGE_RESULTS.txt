@@ -1,0 +1,4 @@
+Coverage report not generated because pytest-cov is not installed in the execution environment.
+The complete pytest suite was executed successfully; see TEST_RESULTS.txt.
+Install the optional test dependencies with: pip install -e '.[test]'
+Then run: python -m pytest --cov=app --cov-report=term-missing
