@@ -1,11 +1,10 @@
 [project]
-name = "rack-provisioner-alpha"
-version = "2.2.0"
-requires-python = ">=3.11"
-
+name="rack-provisioner-alpha-v3-test-lab"
+version="3.0.0a1"
+requires-python=">=3.11"
 [project.optional-dependencies]
-test = ["pytest>=8", "pytest-cov>=5"]
-
+test=["pytest>=8"]
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-addopts = "-ra --strict-markers"
+testpaths=["tests"]
+addopts="-ra --strict-markers"
+markers=["contract: event contract", "integration: multi-module integration"]

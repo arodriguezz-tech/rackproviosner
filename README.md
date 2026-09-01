@@ -1,16 +1,12 @@
-# Rack Provisioner Alpha v2.2 Test Suite
+# Rack Provisioner Alpha v3 Test Lab
 
-This package adds a real pytest suite using:
+A hardware-free test harness with test devices for Nokia 7215 IXS, SN4700,
+SN2700, and Arista H20. It tests all currently implemented non-UI functions:
+EventBus/contracts, InventoryRepository, InventoryService, identity parsing,
+LLDP parsing, DiscoveryService, Readiness rules/service, and SKU revisions/archive.
 
-- Fake inventory repositories for isolated service tests
-- Fake event buses for event assertions
-- Fake settings for inventory policy tests
-- A separate temporary SQLite database for every repository test
-- LLDP parser and EventBus tests
+Run: `python -m pytest -q`
 
-Run:
-
-```bash
-python -m pytest -q
-python -m pytest --cov=app --cov-report=term-missing
-```
+PySide6 is not installed in this execution environment, so actual Qt widget tests
+are not in this run. UI behavior should be tested separately with pytest-qt in an
+environment that has PySide6 installed.
