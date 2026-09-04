@@ -20,6 +20,7 @@ builder.Services.AddDbContext<RackProvisionerDbContext>();
 // Repositories
 builder.Services.AddScoped<RackRepository>();
 builder.Services.AddScoped<SwitchRepository>();
+builder.Services.AddScoped<ConfigurationRepository>();
 
 // Services
 builder.Services.AddScoped<IInventoryService, InventoryService>();

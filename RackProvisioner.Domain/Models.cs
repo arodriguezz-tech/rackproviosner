@@ -25,14 +25,14 @@ public class Switch
 
 public class Configuration
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid RackId { get; set; }
-    public string SKU { get; set; } = string.Empty;
-    public string Profile { get; set; } = string.Empty;
-    public int MajorVersion { get; set; }
-    public int MinorVersion { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
+    public bool IsActive { get; set; } = true;
     public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
     public Rack? Rack { get; set; }
 }
 

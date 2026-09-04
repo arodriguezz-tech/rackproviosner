@@ -101,3 +101,53 @@ public class SwitchRepository
         await _context.SaveChangesAsync();
     }
 }
+
+public class ConfigurationRepository
+{
+    private readonly RackProvisionerDbContext _context;
+
+    public ConfigurationRepository(RackProvisionerDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<Configuration?> GetByIdAsync(Guid id)
+    {
+        return await _context.Configurations.Include(c => c.Rack).FirstOrDefaultAsync(c => c.Id == id);
+    }
+
+    public async Task<IEnumerable<Configuration>> GetByRackIdAsync(Guid rackId)
+    {
+        return await _context.Configurations.Where(c => c.RackId == rackId).ToListAsync();
+    }
+
+    public async Task<IEnumerable<Configuration>> GetAllAsync()
+    {
+        return await _context.Configurations.Include(c => c.Rack).ToListAsync();
+    }
+
+    public async Task AddAsync(Configuration entity)
+    {
+        await _context.Configurations.AddAsync(entity);
+    }
+
+    public async Task UpdateAsync(Configuration entity)
+    {
+        _context.Configurations.Update(entity);
+        await Task.CompletedTask;
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var config = await GetByIdAsync(id);
+        if (config != null)
+        {
+            _context.Configurations.Remove(config);
+        }
+    }
+
+    public async Task SaveAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
+}

@@ -16,6 +16,7 @@ public class UIIntegrationTests : IDisposable
     private readonly RackProvisionerDbContext _context;
     private readonly RackRepository _rackRepository;
     private readonly SwitchRepository _switchRepository;
+    private readonly ConfigurationRepository _configurationRepository;
     private readonly Mock<ISettingsService> _mockSettingsService;
 
     public UIIntegrationTests()
@@ -28,6 +29,7 @@ public class UIIntegrationTests : IDisposable
         _eventBus = new InMemoryEventBus();
         _rackRepository = new RackRepository(_context);
         _switchRepository = new SwitchRepository(_context);
+        _configurationRepository = new ConfigurationRepository(_context);
         _mockSettingsService = new Mock<ISettingsService>();
         _mockSettingsService.Setup(s => s.Get(It.IsAny<string>(), It.IsAny<bool>()))
             .Returns((string key, bool defaultValue) => true);
@@ -67,7 +69,7 @@ public class UIIntegrationTests : IDisposable
     public async Task InventoryService_CreateRackAsync_CreatesRackAndPublishesEvent()
     {
         // Arrange
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
         RackInventoryLoadedEvent? publishedEvent = null;
 
         _eventBus.Subscribe<RackInventoryLoadedEvent>(evt =>
@@ -91,58 +93,12 @@ public class UIIntegrationTests : IDisposable
     public async Task InventoryService_CreateRackAsync_ThrowsOnMissingSerial()
     {
         // Arrange
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
 
         // Act & Assert
         var ex = await Assert.ThrowsAsync<ArgumentException>(() =>
             service.CreateRackAsync("", "RK1617"));
         Assert.Contains("Rack Serial is required", ex.Message);
-    }
-
-    [Fact]
-    public async Task SkuService_CreateConfigurationAsync_CreatesConfigurationWithVersionTracking()
-    {
-        // Arrange
-        var rack = new Rack { Serial = "RK001", Position = "RK1617", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow };
-        await _context.Racks.AddAsync(rack);
-        await _context.SaveChangesAsync();
-
-        var service = new SkuService(_context, _eventBus);
-
-        // Act
-        var config = await service.CreateConfigurationAsync(
-            rack.Id, "SKU123", "Profile1", "content-v1", 1, 0);
-
-        // Assert
-        Assert.NotNull(config);
-        Assert.Equal(1, config.MajorVersion);
-        Assert.Equal(0, config.MinorVersion);
-        Assert.Equal("SKU123", config.SKU);
-        Assert.Equal("content-v1", config.Content);
-    }
-
-    [Fact]
-    public async Task SkuService_CreateConfigurationAsync_IncrementsMinorVersionOnContentChange()
-    {
-        // Arrange
-        var rack = new Rack { Serial = "RK001", Position = "RK1617", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow };
-        await _context.Racks.AddAsync(rack);
-        await _context.SaveChangesAsync();
-
-        var service = new SkuService(_context, _eventBus);
-
-        // Act
-        var config1 = await service.CreateConfigurationAsync(rack.Id, "SKU123", "Profile1", "content-v1", 1, 0);
-        var config2 = await service.CreateConfigurationAsync(rack.Id, "SKU123", "Profile1", "content-v2", 1, 0);
-
-        // Assert
-        Assert.Equal("content-v1", config1.Content);
-        Assert.Equal(1, config1.MajorVersion);
-        Assert.Equal(0, config1.MinorVersion);
-
-        Assert.Equal("content-v2", config2.Content);
-        Assert.Equal(1, config2.MajorVersion);
-        Assert.Equal(1, config2.MinorVersion);
     }
 
     [Fact]
@@ -193,7 +149,7 @@ public class UIIntegrationTests : IDisposable
         await _context.Racks.AddAsync(rack);
         await _context.SaveChangesAsync();
 
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
 
         // Act
         var (status, role, reason) = await service.VerifyIdentityAsync("RK001", "SW001", null);
@@ -223,7 +179,7 @@ public class UIIntegrationTests : IDisposable
         await _context.Racks.AddAsync(rack);
         await _context.SaveChangesAsync();
 
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
 
         // Act
         var (status, role, reason) = await service.VerifyIdentityAsync("RK001", null, "AA:BB:CC:DD:EE:FF");
@@ -245,7 +201,7 @@ public class UIIntegrationTests : IDisposable
             new Switch { Model = "Arista3", Serial = "SW003", MAC = "AA:BB:CC:DD:EE:FD", Role = SwitchRole.NS2, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
         };
 
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
 
         // Act & Assert
         await service.ValidateInventoryAsync(rack);
@@ -262,7 +218,7 @@ public class UIIntegrationTests : IDisposable
             new Switch { Model = "Arista2", Serial = "SW002", MAC = "AA:BB:CC:DD:EE:FE", Role = SwitchRole.NS1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
         };
 
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
 
         // Act & Assert
         var ex = await Assert.ThrowsAsync<ArgumentException>(() =>
@@ -281,7 +237,7 @@ public class UIIntegrationTests : IDisposable
             new Switch { Model = "Arista2", Serial = "SW002", MAC = "AA:BB:CC:DD:EE:FE", Role = SwitchRole.MX, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
         };
 
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
 
         // Act & Assert
         var ex = await Assert.ThrowsAsync<ArgumentException>(() =>
@@ -301,7 +257,7 @@ public class UIIntegrationTests : IDisposable
             new Switch { Model = "Arista3", Serial = "SW003", MAC = "AA:BB:CC:DD:EE:FD", Role = SwitchRole.NS2, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
         };
 
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
 
         // Act & Assert
         var ex = await Assert.ThrowsAsync<ArgumentException>(() =>
@@ -317,7 +273,7 @@ public class UIIntegrationTests : IDisposable
         await _context.Racks.AddAsync(rack);
         await _context.SaveChangesAsync();
 
-        var service = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var service = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
         SwitchDiscoveredEvent? publishedEvent = null;
 
         _eventBus.Subscribe<SwitchDiscoveredEvent>(evt =>
@@ -423,7 +379,7 @@ public class UIIntegrationTests : IDisposable
         await _context.SaveChangesAsync();
 
         var mockExplainer = new Mock<IReadinessExplainer>();
-        var inventoryService = new InventoryService(_rackRepository, _switchRepository, _eventBus, _mockSettingsService.Object);
+        var inventoryService = new InventoryService(_rackRepository, _switchRepository, _configurationRepository, _eventBus, _mockSettingsService.Object);
         var mockSkuService = new Mock<ISkuService>();
         var viewModel = new ReadinessViewModel(_eventBus, mockExplainer.Object, inventoryService, mockSkuService.Object);
 

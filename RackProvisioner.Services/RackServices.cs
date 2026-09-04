@@ -15,12 +15,20 @@ public interface IInventoryService
     Task AddSwitchToRackAsync(Guid rackId, Switch @switch);
     Task<(string Status, string? Role, string Reason)> VerifyIdentityAsync(string rackSerial, string? serial, string? mac);
     Task ValidateInventoryAsync(Rack rack);
+    
+    // Configuration management methods
+    Task<IEnumerable<Configuration>> GetAllConfigurationsAsync();
+    Task<Configuration?> GetConfigurationByIdAsync(Guid id);
+    Task CreateConfigurationAsync(Configuration configuration);
+    Task UpdateConfigurationAsync(Configuration configuration);
+    Task DeleteConfigurationAsync(Guid id);
 }
 
 public class InventoryService : IInventoryService
 {
     private readonly RackRepository _rackRepository;
     private readonly SwitchRepository _switchRepository;
+    private readonly ConfigurationRepository _configurationRepository;
     private readonly IEventBus _eventBus;
     private readonly ISettingsService _settingsService;
 
@@ -29,11 +37,13 @@ public class InventoryService : IInventoryService
     public InventoryService(
         RackRepository rackRepository,
         SwitchRepository switchRepository,
+        ConfigurationRepository configurationRepository,
         IEventBus eventBus,
         ISettingsService settingsService)
     {
         _rackRepository = rackRepository;
         _switchRepository = switchRepository;
+        _configurationRepository = configurationRepository;
         _eventBus = eventBus;
         _settingsService = settingsService;
     }
@@ -182,6 +192,36 @@ public class InventoryService : IInventoryService
         await Task.CompletedTask;
     }
 
+    public async Task<IEnumerable<Configuration>> GetAllConfigurationsAsync()
+    {
+        return await _configurationRepository.GetAllAsync();
+    }
+
+    public async Task<Configuration?> GetConfigurationByIdAsync(Guid id)
+    {
+        return await _configurationRepository.GetByIdAsync(id);
+    }
+
+    public async Task CreateConfigurationAsync(Configuration configuration)
+    {
+        configuration.CreatedAt = DateTime.UtcNow;
+        await _configurationRepository.AddAsync(configuration);
+        await _configurationRepository.SaveAsync();
+    }
+
+    public async Task UpdateConfigurationAsync(Configuration configuration)
+    {
+        configuration.UpdatedAt = DateTime.UtcNow;
+        await _configurationRepository.UpdateAsync(configuration);
+        await _configurationRepository.SaveAsync();
+    }
+
+    public async Task DeleteConfigurationAsync(Guid id)
+    {
+        await _configurationRepository.DeleteAsync(id);
+        await _configurationRepository.SaveAsync();
+    }
+
     private static string NormalizeSerial(string serial) => serial?.Trim().ToUpperInvariant() ?? string.Empty;
     private static string NormalizeMac(string mac) => mac?.Trim().ToUpperInvariant() ?? string.Empty;
 }
@@ -206,6 +246,10 @@ public class SkuService : ISkuService
         _eventBus = eventBus;
     }
 
+    // DEPRECATED: Version history tracking methods removed in alpha—use InventoryService Configuration methods instead
+    // These methods are provided as stubs for backward compatibility with ReadinessViewModel
+    // Future phase 2 work: implement audit table if version tracking is needed
+
     public async Task<Configuration> CreateConfigurationAsync(
         Guid rackId,
         string sku,
@@ -214,80 +258,39 @@ public class SkuService : ISkuService
         int majorVersion = 1,
         int minorVersion = 0)
     {
-        if (string.IsNullOrWhiteSpace(sku))
-            throw new ArgumentException("SKU is required");
-        if (string.IsNullOrWhiteSpace(profile))
-            throw new ArgumentException("Profile is required");
-        if (string.IsNullOrWhiteSpace(content))
-            throw new ArgumentException("Configuration content is required");
-
-        var rack = await _context.Racks.FindAsync(rackId);
-        if (rack == null)
-            throw new ArgumentException($"Rack with ID {rackId} not found");
-
-        var existing = await _context.Configurations
-            .Where(c => c.RackId == rackId && c.SKU == sku && c.Profile == profile)
-            .OrderByDescending(c => c.MajorVersion)
-            .ThenByDescending(c => c.MinorVersion)
-            .FirstOrDefaultAsync();
-
-        if (existing != null && content != existing.Content)
-        {
-            minorVersion = existing.MinorVersion + 1;
-            majorVersion = existing.MajorVersion;
-        }
-
-        var config = new Configuration
-        {
-            RackId = rackId,
-            SKU = sku,
-            Profile = profile,
-            Content = content,
-            MajorVersion = majorVersion,
-            MinorVersion = minorVersion,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        await _context.Configurations.AddAsync(config);
-        await _context.SaveChangesAsync();
-
-        return config;
+        // Deprecated: Version tracking removed. Create single config via IInventoryService instead.
+        throw new NotImplementedException("SkuService.CreateConfigurationAsync is deprecated. Use IInventoryService.CreateConfigurationAsync.");
     }
 
     public async Task<Configuration?> GetLatestConfigurationAsync(Guid rackId)
     {
+        // Deprecated: Return the first (only) active configuration for this rack
+        // Version history not tracked in alpha; return most recent by CreatedAt
         return await _context.Configurations
-            .Where(c => c.RackId == rackId)
-            .OrderByDescending(c => c.MajorVersion)
-            .ThenByDescending(c => c.MinorVersion)
+            .Where(c => c.RackId == rackId && c.IsActive)
+            .OrderByDescending(c => c.CreatedAt)
             .FirstOrDefaultAsync();
     }
 
     public async Task<Configuration?> GetConfigurationByVersionAsync(Guid rackId, int majorVersion, int minorVersion)
     {
-        return await _context.Configurations
-            .FirstOrDefaultAsync(c =>
-                c.RackId == rackId &&
-                c.MajorVersion == majorVersion &&
-                c.MinorVersion == minorVersion);
+        // Deprecated: Version tracking removed in alpha
+        throw new NotImplementedException("SkuService.GetConfigurationByVersionAsync is deprecated. Version history not tracked.");
     }
 
     public async Task<IEnumerable<Configuration>> GetConfigurationHistoryAsync(Guid rackId)
     {
+        // Deprecated: Return all active configurations for this rack (alpha does not track versions)
         return await _context.Configurations
-            .Where(c => c.RackId == rackId)
+            .Where(c => c.RackId == rackId && c.IsActive)
             .OrderByDescending(c => c.CreatedAt)
             .ToListAsync();
     }
 
     public async Task ArchiveConfigurationAsync(int configurationId)
     {
-        var config = await _context.Configurations.FindAsync(configurationId);
-        if (config == null)
-            throw new ArgumentException($"Configuration with ID {configurationId} not found");
-
-        _context.Configurations.Remove(config);
-        await _context.SaveChangesAsync();
+        // Deprecated: Use IInventoryService.DeleteConfigurationAsync with Guid instead
+        throw new NotImplementedException("SkuService.ArchiveConfigurationAsync is deprecated. Use IInventoryService.DeleteConfigurationAsync.");
     }
 }
 

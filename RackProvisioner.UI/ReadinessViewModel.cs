@@ -25,7 +25,7 @@ public class ReadinessViewModel
     // Configuration status
     public string ConfigurationStatus { get; private set; } = "Unknown";
     public string? LatestVersion { get; private set; } = null;
-    public List<(int MajorVersion, int MinorVersion, DateTime CreatedAt)> ConfigurationHistory { get; private set; } = new();
+    public List<(Guid ConfigId, string Name, DateTime CreatedAt)> ConfigurationHistory { get; private set; } = new();
 
     // UI state
     public bool IsEvaluating { get; private set; } = false;
@@ -191,12 +191,12 @@ public class ReadinessViewModel
             }
             else
             {
-                LatestVersion = $"{latestConfig.MajorVersion}.{latestConfig.MinorVersion}";
+                LatestVersion = latestConfig.Name;
                 ConfigurationStatus = "Latest";
             }
 
             ConfigurationHistory = history
-                .Select(c => (c.MajorVersion, c.MinorVersion, c.CreatedAt))
+                .Select(c => (c.Id, c.Name, c.CreatedAt))
                 .ToList();
         }
         catch (Exception ex)

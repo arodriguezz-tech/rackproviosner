@@ -46,9 +46,10 @@ public class RackProvisionerDbContext : DbContext
         modelBuilder.Entity<Configuration>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.SKU).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Profile).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.Description).IsRequired().HasMaxLength(100);
             entity.Property(e => e.Content).IsRequired();
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.HasOne(e => e.Rack)
                 .WithMany()
                 .HasForeignKey(e => e.RackId)

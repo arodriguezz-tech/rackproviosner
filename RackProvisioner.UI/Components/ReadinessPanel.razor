@@ -117,7 +117,7 @@
                 @foreach (var config in ViewModel.ConfigurationHistory.OrderByDescending(c => c.CreatedAt))
                 {
                   <tr>
-                    <td class="text-monospace">@($"{config.MajorVersion}.{config.MinorVersion}")</td>
+                     <td class="text-monospace">@config.Name</td>
                     <td>@config.CreatedAt:G</td>
                   </tr>
                 }
