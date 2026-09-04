@@ -1,8 +1,9 @@
 using RackProvisioner.UI.Components;
 using RackProvisioner.UI;
 using RackProvisioner.Core;
-using RackProvisioner.Services.AI;
 using RackProvisioner.Services;
+using RackProvisioner.Services.AI;
+using RackProvisioner.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,17 +16,22 @@ builder.Services.AddHttpClient();
 // Event bus for in-process pub/sub
 builder.Services.AddSingleton<IEventBus, InMemoryEventBus>();
 
-// Register explainer: use Gemini if GEMINI_API_KEY is set, otherwise templates
-builder.Services.AddSingleton<IReadinessExplainer>(sp =>
-{
-    var apiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY");
-    var httpClient = sp.GetRequiredService<HttpClient>();
-    if (!string.IsNullOrEmpty(apiKey))
-    {
-        return new GeminiExplainerService(apiKey, httpClient);
-    }
-    return new TemplateExplainerService();
-});
+// Database context
+builder.Services.AddDbContext<RackProvisionerDbContext>();
+
+// Repositories
+builder.Services.AddScoped<RackRepository>();
+builder.Services.AddScoped<SwitchRepository>();
+
+// Services
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+builder.Services.AddScoped<ISkuService, SkuService>();
+builder.Services.AddScoped<IDiscoveryService, DiscoveryService>();
+builder.Services.AddScoped<IReadinessService, ReadinessService>();
+builder.Services.AddSingleton<ISettingsService, SettingsService>();
+
+// Register template-based explainer for readiness status
+builder.Services.AddSingleton<IReadinessExplainer, TemplateExplainerService>();
 
 // Readiness view model subscribes to readiness events and fetches explanations
 builder.Services.AddSingleton<ReadinessViewModel>();

@@ -63,35 +63,36 @@ public class TemplateExplainerServiceTests
         // Assert
         Assert.Contains("UNKNOWN_REASON", result);
     }
-}
 
-public class GeminiExplainerServiceTests
-{
     [Fact]
-    public async Task ExplainReadinessDecisionAsync_Ready_ReturnsFallback()
+    public async Task ExplainReadinessDecisionAsync_MissingInventory_ReturnsMissingInventoryExplanation()
     {
         // Arrange
-        var explainer = new GeminiExplainerService("dummy-key");
-
-        // Act
-        var result = await explainer.ExplainReadinessDecisionAsync("Ready", new());
-
-        // Assert
-        Assert.Contains("✅", result);
-    }
-
-    [Fact]
-    public async Task ExplainReadinessDecisionAsync_APIFailure_ReturnsFallback()
-    {
-        // Arrange - use invalid key to trigger API failure
-        var explainer = new GeminiExplainerService("invalid-key-12345");
-        var blockedReasons = new List<string> { "TEST_REASON" };
+        var explainer = new TemplateExplainerService();
+        var blockedReasons = new List<string> { "MISSING_INVENTORY" };
 
         // Act
         var result = await explainer.ExplainReadinessDecisionAsync("Blocked", blockedReasons);
 
-        // Assert - should fallback gracefully
-        Assert.Contains("blocked", result, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("TEST_REASON", result);
+        // Assert
+        Assert.Contains("MISSING_INVENTORY", result);
+        Assert.Contains("inventory", result, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Manually add", result);
+    }
+
+    [Fact]
+    public async Task ExplainReadinessDecisionAsync_Blocked_IncludesRemediationSteps()
+    {
+        // Arrange
+        var explainer = new TemplateExplainerService();
+        var blockedReasons = new List<string> { "CONFIG_NOT_FOUND" };
+
+        // Act
+        var result = await explainer.ExplainReadinessDecisionAsync("Blocked", blockedReasons);
+
+        // Assert
+        Assert.Contains("CONFIG_NOT_FOUND", result);
+        Assert.Contains("Steps to resolve", result);
+        Assert.Contains("•", result); // bullet points for steps
     }
 }

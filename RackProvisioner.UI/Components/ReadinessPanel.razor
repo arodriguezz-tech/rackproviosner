@@ -1,41 +1,221 @@
+@page "/readiness"
+@rendermode InteractiveServer
 @inject RackProvisioner.UI.ReadinessViewModel ViewModel
+@inject IInventoryService InventoryService
 
 <div class="card m-2">
+  <div class="card-header bg-primary text-white">
+    <h5 class="mb-0">Rack Readiness Evaluation</h5>
+  </div>
   <div class="card-body">
-    <h5 class="card-title">Readiness</h5>
-    <p>
-      <strong>Status:</strong>
-      <span class="ms-2">@ViewModel.Status</span>
-    </p>
 
-    @if (ViewModel.Status == "Ready")
-    {
-        <div class="alert alert-success">✅ Rack is READY for provisioning.</div>
-    }
-    else if (ViewModel.Status == "Unknown")
-    {
-        <div class="alert alert-secondary">Status unknown.</div>
-    }
-    else
-    {
-        <div class="alert alert-danger">⚠️ Provisioning is BLOCKED</div>
-        <button class="btn btn-primary mb-2" @onclick="ShowExplanation">Why?</button>
+    <!-- Readiness Status Section -->
+    <div class="mb-4">
+      <h6 class="border-bottom pb-2">Readiness Status</h6>
+      <p>
+        <strong>Overall Status:</strong>
+        <span class="badge @StatusBadgeClass">@ViewModel.Status</span>
+      </p>
 
-        @if (!string.IsNullOrEmpty(ViewModel.Explanation))
+      @if (ViewModel.Status == "Ready")
+      {
+        <div class="alert alert-success">
+          ✅ Rack is READY for provisioning.
+        </div>
+      }
+      else if (ViewModel.Status == "Unknown")
+      {
+        <div class="alert alert-secondary">
+          ⏳ Status unknown. Load a rack to evaluate.
+        </div>
+      }
+      else
+      {
+        <div class="alert alert-warning">
+          ⚠️ Provisioning is BLOCKED
+        </div>
+        @if (ViewModel.BlockedReasons.Any())
         {
-            <div class="mt-2">
-                <h6>Explanation</h6>
-                <pre>@ViewModel.Explanation</pre>
-            </div>
+          <ul class="small mb-2">
+            @foreach (var reason in ViewModel.BlockedReasons)
+            {
+              <li>@reason</li>
+            }
+          </ul>
         }
+      }
+
+      @if (!string.IsNullOrEmpty(ViewModel.Explanation))
+      {
+        <div class="mt-2 p-2 bg-light rounded">
+          <h6>Explanation</h6>
+          <pre class="small mb-0">@ViewModel.Explanation</pre>
+        </div>
+      }
+    </div>
+
+    <!-- Inventory Status Section -->
+    <div class="mb-4">
+      <h6 class="border-bottom pb-2">Inventory Status</h6>
+      <p>
+        <strong>Inventory:</strong>
+        <span class="badge @InventoryBadgeClass">@ViewModel.InventoryStatus</span>
+        <span class="text-muted">(@ViewModel.DeviceCount devices)</span>
+      </p>
+
+      @if (ViewModel.Devices.Any())
+      {
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Role</th>
+                <th>Model</th>
+                <th>Serial</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var device in ViewModel.Devices)
+              {
+                <tr>
+                  <td><span class="badge bg-info">@device.Role</span></td>
+                  <td>@device.Model</td>
+                  <td class="text-monospace">@device.Serial</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+
+    <!-- Configuration Status Section -->
+    <div class="mb-4">
+      <h6 class="border-bottom pb-2">Configuration Status</h6>
+      <p>
+        <strong>Configuration:</strong>
+        <span class="badge @ConfigurationBadgeClass">@ViewModel.ConfigurationStatus</span>
+        @if (!string.IsNullOrEmpty(ViewModel.LatestVersion))
+        {
+          <span class="text-muted">(v@ViewModel.LatestVersion)</span>
+        }
+      </p>
+
+      @if (ViewModel.ConfigurationHistory.Any())
+      {
+        <details class="mt-2">
+          <summary class="cursor-pointer">View Configuration History (@ViewModel.ConfigurationHistory.Count versions)</summary>
+          <div class="table-responsive mt-2">
+            <table class="table table-sm table-bordered mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Version</th>
+                  <th>Created At</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var config in ViewModel.ConfigurationHistory.OrderByDescending(c => c.CreatedAt))
+                {
+                  <tr>
+                    <td class="text-monospace">@($"{config.MajorVersion}.{config.MinorVersion}")</td>
+                    <td>@config.CreatedAt:G</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </details>
+      }
+    </div>
+
+    <!-- Control Section -->
+    <div class="mb-4">
+      <h6 class="border-bottom pb-2">Actions</h6>
+
+      <div class="input-group mb-2">
+        <input type="text" class="form-control" placeholder="Rack Serial (e.g., RK001)" 
+               @bind="RackSerialInput" />
+        <button class="btn btn-primary" @onclick="RefreshReadiness" disabled="@ViewModel.IsEvaluating">
+          @if (ViewModel.IsEvaluating)
+          {
+            <span class="spinner-border spinner-border-sm me-1"></span>
+            <span>Evaluating...</span>
+          }
+          else
+          {
+            <span>Refresh Readiness</span>
+          }
+        </button>
+      </div>
+
+      @if (ViewModel.IsEvaluating)
+      {
+        <div class="alert alert-info small mb-2">
+          ⏳ Evaluating readiness...
+        </div>
+      }
+    </div>
+
+    <!-- Error Display -->
+    @if (!string.IsNullOrEmpty(ViewModel.ErrorMessage))
+    {
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error:</strong> @ViewModel.ErrorMessage
+        <button type="button" class="btn-close" @onclick="() => ClearError()"></button>
+      </div>
+    }
+
+    <!-- Last Updated -->
+    @if (ViewModel.LastUpdated > DateTime.MinValue)
+    {
+      <div class="text-muted small">
+        Last updated: @ViewModel.LastUpdated:G
+      </div>
     }
   </div>
 </div>
 
 @code {
-    private async Task ShowExplanation()
+    private string RackSerialInput = string.Empty;
+
+    private string StatusBadgeClass => ViewModel.Status switch
     {
-        await ViewModel.RefreshExplanationAsync();
-        // Blazor will re-render automatically because ViewModel is a singleton; components will update when bound data changes
+        "Ready" => "bg-success",
+        "Blocked" => "bg-danger",
+        "Pending" => "bg-warning text-dark",
+        _ => "bg-secondary"
+    };
+
+    private string InventoryBadgeClass => ViewModel.InventoryStatus switch
+    {
+        "Complete" => "bg-success",
+        "Partial" => "bg-warning text-dark",
+        "Empty" => "bg-danger",
+        "Error" => "bg-secondary",
+        _ => "bg-secondary"
+    };
+
+    private string ConfigurationBadgeClass => ViewModel.ConfigurationStatus switch
+    {
+        "Latest" => "bg-success",
+        "Outdated" => "bg-warning text-dark",
+        "Missing" => "bg-danger",
+        "Error" => "bg-secondary",
+        _ => "bg-secondary"
+    };
+
+    private async Task RefreshReadiness()
+    {
+        if (string.IsNullOrWhiteSpace(RackSerialInput))
+        {
+            return;
+        }
+
+        await ViewModel.RefreshReadinessAsync(RackSerialInput.Trim());
+    }
+
+    private void ClearError()
+    {
+        // ViewModel's ErrorMessage will be cleared on next refresh
     }
 }
