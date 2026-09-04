@@ -44,7 +44,7 @@ public class InventoryService : IInventoryService
         if (rack != null)
         {
             _eventBus.Publish(new RackInventoryLoadedEvent(
-                Guid.NewGuid(),
+                rack.Id,
                 rack.Serial,
                 rack.Inventory?.Count ?? 0));
         }
@@ -80,8 +80,8 @@ public class InventoryService : IInventoryService
         await _rackRepository.SaveAsync();
 
         _eventBus.Publish(new RackInventoryLoadedEvent(
-            Guid.NewGuid(),
-            serial,
+            rack.Id,
+            rack.Serial,
             0));
 
         return rack;
@@ -102,7 +102,7 @@ public class InventoryService : IInventoryService
         await _switchRepository.SaveAsync();
 
         _eventBus.Publish(new SwitchDiscoveredEvent(
-            Guid.NewGuid(),
+            rackId,
             @switch.Model,
             @switch.Serial,
             @switch.MAC));
