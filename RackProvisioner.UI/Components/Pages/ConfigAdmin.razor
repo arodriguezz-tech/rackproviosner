@@ -1,0 +1,714 @@
+@page "/admin/configuration"
+@using RackProvisioner.Core
+@using RackProvisioner.Domain
+@using RackProvisioner.Services
+@inject ConfigurationManagementViewModel ViewModel
+
+<PageTitle>Configuration Management - Admin Console</PageTitle>
+
+<div class="admin-container">
+    <div class="admin-header">
+        <h1>Configuration Management</h1>
+        <p class="subtitle">Create, edit, and manage switch configuration profiles and versions</p>
+    </div>
+
+    <div class="admin-controls">
+        <button class="btn btn-primary" @onclick="ShowCreateConfigModal">
+            <span class="icon">+</span> Create Profile
+        </button>
+        <button class="btn btn-secondary" @onclick="RefreshConfigurations">
+            <span class="icon">⟳</span> Refresh
+        </button>
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewModel.ErrorMessage))
+    {
+        <div class="error-message">
+            @ViewModel.ErrorMessage
+        </div>
+    }
+
+    <div class="tabs">
+        <button class="tab @(ViewModel.ActiveTab == "active" ? "active" : "")" @onclick="@(() => SwitchTab("active"))">
+            Active Profiles
+        </button>
+        <button class="tab @(ViewModel.ActiveTab == "archived" ? "active" : "")" @onclick="@(() => SwitchTab("archived"))">
+            Archived Profiles
+        </button>
+        <button class="tab @(ViewModel.ActiveTab == "history" ? "active" : "")" @onclick="@(() => SwitchTab("history"))">
+            Version History
+        </button>
+    </div>
+
+    @if (ViewModel.IsLoading)
+    {
+        <div class="loading">Loading configurations...</div>
+    }
+    else if (ViewModel.ActiveTab == "active" || ViewModel.ActiveTab == "archived")
+    {
+        var displayConfigs = ViewModel.ActiveTab == "active" 
+            ? ViewModel.ActiveConfigs
+            : ViewModel.ArchivedConfigs;
+
+        @if (displayConfigs.Count == 0)
+        {
+            <div class="empty-state">
+                <p>No @ViewModel.ActiveTab profiles found.</p>
+            </div>
+        }
+        else
+        {
+            <div class="configs-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Profile Name</th>
+                            <th>Description</th>
+                            <th>Version</th>
+                            <th>Last Modified</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var config in displayConfigs)
+                        {
+                            <tr>
+                                <td class="name">@config.Name</td>
+                                <td class="description">@config.Description</td>
+                                <td class="version">-</td>
+                                <td class="modified">@config.UpdatedAt.ToString("MMM dd, yyyy")</td>
+                                <td>
+                                    @if (!config.IsActive)
+                                    {
+                                        <span class="badge archived">Archived</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge active">Active</span>
+                                    }
+                                </td>
+                                <td class="actions">
+                                    <button class="btn-action btn-edit" @onclick="@(() => ShowEditConfigModal(config.Id))">
+                                        Edit
+                                    </button>
+                                    @if (config.IsActive)
+                                    {
+                                        <button class="btn-action btn-archive" @onclick="@(() => ArchiveConfig(config.Id))">
+                                            Archive
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn-action btn-restore" @onclick="@(() => RestoreConfig(config.Id))">
+                                            Restore
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else if (ViewModel.ActiveTab == "history")
+    {
+        @if (ViewModel.VersionHistory.Count == 0)
+        {
+            <div class="empty-state">
+                <p>No version history available.</p>
+            </div>
+        }
+        else
+        {
+            <div class="history-timeline">
+                @foreach (var entry in ViewModel.VersionHistory)
+                {
+                    <div class="history-entry">
+                        <div class="history-marker"></div>
+                        <div class="history-content">
+                            <div class="history-header">
+                                <h4>@entry.Name</h4>
+                                <span class="timestamp">@entry.CreatedAt.ToString("MMM dd, yyyy HH:mm")</span>
+                            </div>
+                            <p class="history-description">Configuration ID: @entry.ConfigId</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
+
+<!-- Create/Edit Config Modal -->
+@if (showConfigModal)
+{
+    <div class="modal-overlay" @onclick="CloseConfigModal">
+        <div class="modal" @onclick:stopPropagation>
+            <div class="modal-header">
+                <h2>@(isEditMode ? "Edit Configuration" : "Create New Configuration")</h2>
+                <button class="close-btn" @onclick="CloseConfigModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                @if (!string.IsNullOrEmpty(ViewModel.ErrorMessage))
+                {
+                    <div class="error-message">
+                        @ViewModel.ErrorMessage
+                    </div>
+                }
+                <div class="form-group">
+                    <label for="profileName">Profile Name</label>
+                    <input type="text" id="profileName" class="form-control" @bind="currentConfig.Name" placeholder="e.g., Production-Switch-Config">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" class="form-control textarea" @bind="currentConfig.Description" placeholder="Describe this configuration profile..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="configData">Configuration Content</label>
+                    <textarea id="configData" class="form-control textarea code" @bind="currentConfig.Content" placeholder="Enter configuration content..."></textarea>
+                </div>
+                <div class="form-group" style="display: flex; gap: 1rem;">
+                    <p style="color: #666; margin: 0;">Use the Active/Archived buttons in the table to manage configuration status.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" @onclick="CloseConfigModal">Cancel</button>
+                <button class="btn btn-primary" @onclick="SaveConfig">@(isEditMode ? "Update" : "Create") Profile</button>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- View Diff Modal -->
+@if (showDiffModal)
+{
+    <div class="modal-overlay" @onclick="CloseDiffModal">
+        <div class="modal modal-large" @onclick:stopPropagation>
+            <div class="modal-header">
+                <h2>Configuration Diff</h2>
+                <button class="close-btn" @onclick="CloseDiffModal">&times;</button>
+            </div>
+            <div class="modal-body diff-viewer">
+                <div class="diff-content">
+                    @((MarkupString)diffContent)
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" @onclick="CloseDiffModal">Close</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool showConfigModal = false;
+    private bool showDiffModal = false;
+    private bool isEditMode = false;
+    private Configuration currentConfig = new();
+    private string diffContent = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.LoadConfigsAsync();
+        await ViewModel.LoadVersionHistoryAsync();
+    }
+
+    private void ShowCreateConfigModal()
+    {
+        isEditMode = false;
+        currentConfig = new Configuration();
+        showConfigModal = true;
+    }
+
+    private async Task ShowEditConfigModal(Guid configId)
+    {
+        isEditMode = true;
+        var config = ViewModel.ActiveConfigs.FirstOrDefault(c => c.Id == configId);
+        if (config != null)
+        {
+            currentConfig = config;
+            showConfigModal = true;
+        }
+    }
+
+    private void CloseConfigModal()
+    {
+        showConfigModal = false;
+    }
+
+    private async Task SaveConfig()
+    {
+        if (isEditMode)
+        {
+            await ViewModel.UpdateConfigAsync(currentConfig);
+        }
+        else
+        {
+            await ViewModel.SaveConfigAsync(currentConfig);
+        }
+        showConfigModal = false;
+        await ViewModel.LoadConfigsAsync();
+    }
+
+    private async Task ArchiveConfig(Guid configId)
+    {
+        await ViewModel.ArchiveConfigAsync(configId);
+    }
+
+    private async Task RestoreConfig(Guid configId)
+    {
+        await ViewModel.RestoreConfigAsync(configId);
+    }
+
+    private void SwitchTab(string tab)
+    {
+        ViewModel.ActiveTab = tab;
+    }
+
+    private async Task RefreshConfigurations()
+    {
+        await ViewModel.LoadConfigsAsync();
+    }
+
+    private void ViewDiff(Guid currentId, string previousId)
+    {
+        // TODO: Implement actual diff comparison
+        diffContent = "<div class='diff-placeholder'>Diff comparison not yet implemented</div>";
+        showDiffModal = true;
+    }
+
+    private void CloseDiffModal()
+    {
+        showDiffModal = false;
+        diffContent = "";
+    }
+
+}
+
+<style>
+.admin-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-header {
+    margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+    color: #333;
+}
+
+.subtitle {
+    color: #666;
+    margin: 0;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+
+.btn-primary {
+    background-color: #0066cc;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0052a3;
+}
+
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #d0d0d0;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 2rem;
+}
+
+.tab {
+    padding: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    color: #333;
+}
+
+.tab.active {
+    color: #0066cc;
+    border-bottom-color: #0066cc;
+}
+
+.configs-table {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f5f5f5;
+}
+
+th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.name {
+    font-weight: 600;
+    color: #0066cc;
+}
+
+.description {
+    color: #666;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.version {
+    font-family: monospace;
+    color: #999;
+}
+
+.modified {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge.active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.badge.archived {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-action {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-edit {
+    background-color: #0066cc;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0052a3;
+}
+
+.btn-archive {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.btn-archive:hover {
+    background-color: #e0a800;
+}
+
+.btn-restore {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-restore:hover {
+    background-color: #218838;
+}
+
+.history-timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #ddd;
+}
+
+.history-entry {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.history-marker {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background-color: #0066cc;
+    border: 4px solid white;
+    box-shadow: 0 0 0 2px #ddd;
+}
+
+.history-content {
+    margin-left: 80px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.history-header h4 {
+    margin: 0;
+    color: #333;
+}
+
+.version-tag {
+    background-color: #f0f0f0;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #999;
+    margin-left: 0.5rem;
+}
+
+.timestamp {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.history-description {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+.history-meta {
+    display: flex;
+    gap: 1rem;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.meta-item {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.btn-small {
+    padding: 0.35rem 0.7rem;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #999;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #999;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-large {
+    max-width: 900px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    background: white;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: monospace;
+}
+
+.code {
+    font-family: 'Courier New', monospace;
+}
+
+.diff-viewer {
+    background-color: #f5f5f5;
+    font-family: monospace;
+    font-size: 0.85rem;
+    overflow-x: auto;
+}
+
+.diff-content {
+    padding: 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    border-top: 1px solid #ddd;
+    position: sticky;
+    bottom: 0;
+    background: white;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+</style>
