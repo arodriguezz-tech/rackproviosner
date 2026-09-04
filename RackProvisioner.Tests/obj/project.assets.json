@@ -136,6 +136,24 @@
       "Microsoft.EntityFrameworkCore.Analyzers/10.0.11": {
         "type": "package"
       },
+      "Microsoft.EntityFrameworkCore.InMemory/10.0.11": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "10.0.11",
+          "Microsoft.Extensions.Caching.Memory": "10.0.11",
+          "Microsoft.Extensions.Logging": "10.0.11"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/10.0.11": {
         "type": "package",
         "dependencies": {
@@ -1061,6 +1079,23 @@
         "runtime": {
           "bin/placeholder/RackProvisioner.Services.dll": {}
         }
+      },
+      "RackProvisioner.UI/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "RackProvisioner.Core": "1.0.0",
+          "RackProvisioner.Services": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/RackProvisioner.UI.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RackProvisioner.UI.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -1348,6 +1383,21 @@
         "docs/PACKAGE.md",
         "microsoft.entityframeworkcore.analyzers.10.0.11.nupkg.sha512",
         "microsoft.entityframeworkcore.analyzers.nuspec"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.InMemory/10.0.11": {
+      "sha512": "QBMaEmLIAzUUnH7+1Vbui+9Ui0dSsglkKxjW4sofOHycB3218UrnrUzq+Y75syrR4krUCtY7loWKaVBOeU3qKw==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.inmemory/10.0.11",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "lib/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll",
+        "lib/net10.0/Microsoft.EntityFrameworkCore.InMemory.xml",
+        "microsoft.entityframeworkcore.inmemory.10.0.11.nupkg.sha512",
+        "microsoft.entityframeworkcore.inmemory.nuspec"
       ]
     },
     "Microsoft.EntityFrameworkCore.Relational/10.0.11": {
@@ -2400,18 +2450,25 @@
       "type": "project",
       "path": "../RackProvisioner.Services/RackProvisioner.Services.csproj",
       "msbuildProject": "../RackProvisioner.Services/RackProvisioner.Services.csproj"
+    },
+    "RackProvisioner.UI/1.0.0": {
+      "type": "project",
+      "path": "../RackProvisioner.UI/RackProvisioner.UI.csproj",
+      "msbuildProject": "../RackProvisioner.UI/RackProvisioner.UI.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
       "FluentAssertions >= 8.10.0",
       "Microsoft.EntityFrameworkCore >= 10.0.11",
+      "Microsoft.EntityFrameworkCore.InMemory >= 10.0.11",
       "Microsoft.NET.Test.Sdk >= 17.14.1",
       "Moq >= 4.20.72",
       "RackProvisioner.Core >= 1.0.0",
       "RackProvisioner.Data >= 1.0.0",
       "RackProvisioner.Domain >= 1.0.0",
       "RackProvisioner.Services >= 1.0.0",
+      "RackProvisioner.UI >= 1.0.0",
       "coverlet.collector >= 6.0.4",
       "xunit >= 2.9.3",
       "xunit.runner.visualstudio >= 3.1.4"
@@ -2424,11 +2481,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Tests\\RackProvisioner.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Tests\\RackProvisioner.Tests.csproj",
       "projectName": "RackProvisioner.Tests",
-      "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Tests\\RackProvisioner.Tests.csproj",
+      "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Tests\\RackProvisioner.Tests.csproj",
       "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Tests\\obj\\",
+      "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2450,17 +2507,20 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj": {
-              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj"
+            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj": {
+              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj"
             },
-            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\RackProvisioner.Data.csproj": {
-              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\RackProvisioner.Data.csproj"
+            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\RackProvisioner.Data.csproj": {
+              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\RackProvisioner.Data.csproj"
             },
-            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj": {
-              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj"
+            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj": {
+              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj"
             },
-            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Services\\RackProvisioner.Services.csproj": {
-              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Services\\RackProvisioner.Services.csproj"
+            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Services\\RackProvisioner.Services.csproj": {
+              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Services\\RackProvisioner.Services.csproj"
+            },
+            "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.UI\\RackProvisioner.UI.csproj": {
+              "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.UI\\RackProvisioner.UI.csproj"
             }
           }
         }
@@ -2487,6 +2547,10 @@
             "version": "[8.10.0, )"
           },
           "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[10.0.11, )"
+          },
+          "Microsoft.EntityFrameworkCore.InMemory": {
             "target": "Package",
             "version": "[10.0.11, )"
           },

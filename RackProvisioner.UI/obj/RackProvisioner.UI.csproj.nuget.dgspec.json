@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.UI\\RackProvisioner.UI.csproj": {}
+    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.UI\\RackProvisioner.UI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj": {
+    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj",
         "projectName": "RackProvisioner.Core",
-        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj",
+        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -359,14 +359,14 @@
         }
       }
     },
-    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\RackProvisioner.Data.csproj": {
+    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\RackProvisioner.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\RackProvisioner.Data.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\RackProvisioner.Data.csproj",
         "projectName": "RackProvisioner.Data",
-        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\RackProvisioner.Data.csproj",
+        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\RackProvisioner.Data.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -388,8 +388,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj": {
-                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj"
+              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj": {
+                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj"
               }
             }
           }
@@ -716,14 +716,14 @@
         }
       }
     },
-    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj": {
+    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj",
         "projectName": "RackProvisioner.Domain",
-        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj",
+        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1057,14 +1057,14 @@
         }
       }
     },
-    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Services\\RackProvisioner.Services.csproj": {
+    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Services\\RackProvisioner.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Services\\RackProvisioner.Services.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Services\\RackProvisioner.Services.csproj",
         "projectName": "RackProvisioner.Services",
-        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Services\\RackProvisioner.Services.csproj",
+        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Services\\RackProvisioner.Services.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Services\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1086,14 +1086,14 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj": {
-                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj"
+              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj": {
+                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj"
               },
-              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\RackProvisioner.Data.csproj": {
-                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\RackProvisioner.Data.csproj"
+              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\RackProvisioner.Data.csproj": {
+                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\RackProvisioner.Data.csproj"
               },
-              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj": {
-                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj"
+              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj": {
+                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Domain\\RackProvisioner.Domain.csproj"
               }
             }
           }
@@ -1408,14 +1408,14 @@
         }
       }
     },
-    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.UI\\RackProvisioner.UI.csproj": {
+    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.UI\\RackProvisioner.UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.UI\\RackProvisioner.UI.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.UI\\RackProvisioner.UI.csproj",
         "projectName": "RackProvisioner.UI",
-        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.UI\\RackProvisioner.UI.csproj",
+        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.UI\\RackProvisioner.UI.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.UI\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.UI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1437,11 +1437,11 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj": {
-                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Core\\RackProvisioner.Core.csproj"
+              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj": {
+                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Core\\RackProvisioner.Core.csproj"
               },
-              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Services\\RackProvisioner.Services.csproj": {
-                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Services\\RackProvisioner.Services.csproj"
+              "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Services\\RackProvisioner.Services.csproj": {
+                "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Services\\RackProvisioner.Services.csproj"
               }
             }
           }

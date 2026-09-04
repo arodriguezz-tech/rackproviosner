@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.App\\RackProvisioner.App.csproj": {}
+    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.App\\RackProvisioner.App.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.App\\RackProvisioner.App.csproj": {
+    "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.App\\RackProvisioner.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.App\\RackProvisioner.App.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.App\\RackProvisioner.App.csproj",
         "projectName": "RackProvisioner.App",
-        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.App\\RackProvisioner.App.csproj",
+        "projectPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.App\\RackProvisioner.App.csproj",
         "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.App\\obj\\",
+        "outputPath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.App\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Yf2OhTANiyM=",
+  "dgSpecHash": "/80d0qu0OzY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.UI\\RackProvisioner.UI.csproj",
+  "projectFilePath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.UI\\RackProvisioner.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alex\\.nuget\\packages\\mediatr\\14.2.0\\mediatr.14.2.0.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",

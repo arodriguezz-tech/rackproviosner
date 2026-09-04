@@ -119,7 +119,7 @@ public class ReadinessViewModel
 
             var rack = await _inventoryService.LoadRackBySerialAsync(rackSerial);
             await RefreshInventoryStatusAsync(rackSerial);
-            await RefreshConfigurationStatusAsync(rack?.Id ?? 0);
+            await RefreshConfigurationStatusAsync(rack?.Id ?? Guid.Empty);
         }
         catch (Exception ex)
         {
@@ -169,11 +169,11 @@ public class ReadinessViewModel
         }
     }
 
-    private async Task RefreshConfigurationStatusAsync(int rackId)
+    private async Task RefreshConfigurationStatusAsync(Guid rackId)
     {
         try
         {
-            if (rackId == 0)
+            if (rackId == Guid.Empty)
             {
                 ConfigurationStatus = "Missing";
                 LatestVersion = null;

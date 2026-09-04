@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RackProvisioner.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d814a668ff0efc2c6b248acc2bb2d99744c2a43a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c62099e50126b4d840c7ddbf82b6f3b1a51a7c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("RackProvisioner.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RackProvisioner.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

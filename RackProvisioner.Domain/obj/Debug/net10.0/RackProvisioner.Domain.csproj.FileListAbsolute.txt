@@ -10,3 +10,15 @@ C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-f
 C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Domain\obj\Debug\net10.0\refint\RackProvisioner.Domain.dll
 C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Domain\obj\Debug\net10.0\RackProvisioner.Domain.pdb
 C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-friendly-invention\RackProvisioner.Domain\obj\Debug\net10.0\ref\RackProvisioner.Domain.dll
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\bin\Debug\net10.0\RackProvisioner.Domain.deps.json
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\bin\Debug\net10.0\RackProvisioner.Domain.dll
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\bin\Debug\net10.0\RackProvisioner.Domain.pdb
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\RackProvisioner.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\RackProvisioner.Domain.AssemblyInfoInputs.cache
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\RackProvisioner.Domain.AssemblyInfo.cs
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\RackProvisioner.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\RackProvisioner.Domain.sourcelink.json
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\RackProvisioner.Domain.dll
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\refint\RackProvisioner.Domain.dll
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\RackProvisioner.Domain.pdb
+C:\Users\Alex\.copilot\repos\copilot-worktrees\rackproviosner\arodriguezz-tech-gemini-and-copilot\RackProvisioner.Domain\obj\Debug\net10.0\ref\RackProvisioner.Domain.dll

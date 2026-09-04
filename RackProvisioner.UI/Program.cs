@@ -11,8 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddHttpClient();
-
 // Event bus for in-process pub/sub
 builder.Services.AddSingleton<IEventBus, InMemoryEventBus>();
 

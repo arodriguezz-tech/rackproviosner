@@ -2,7 +2,7 @@ namespace RackProvisioner.Domain;
 
 public class Rack
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public string Serial { get; set; } = string.Empty;
     public string Position { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
@@ -13,7 +13,7 @@ public class Rack
 public class Switch
 {
     public int Id { get; set; }
-    public int RackId { get; set; }
+    public Guid RackId { get; set; }
     public string Model { get; set; } = string.Empty;
     public string Serial { get; set; } = string.Empty;
     public string MAC { get; set; } = string.Empty;
@@ -26,7 +26,7 @@ public class Switch
 public class Configuration
 {
     public int Id { get; set; }
-    public int RackId { get; set; }
+    public Guid RackId { get; set; }
     public string SKU { get; set; } = string.Empty;
     public string Profile { get; set; } = string.Empty;
     public int MajorVersion { get; set; }
@@ -39,7 +39,7 @@ public class Configuration
 public class ReadinessState
 {
     public int Id { get; set; }
-    public int RackId { get; set; }
+    public Guid RackId { get; set; }
     public ReadinessStatus Status { get; set; }
     public List<string> BlockedReasons { get; set; } = new();
     public DateTime EvaluatedAt { get; set; }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SIJMnWYNWck=",
+  "dgSpecHash": "hVLBHZpu5Xg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Tests\\RackProvisioner.Tests.csproj",
+  "projectFilePath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Tests\\RackProvisioner.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alex\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
@@ -14,6 +14,7 @@
     "C:\\Users\\Alex\\.nuget\\packages\\microsoft.entityframeworkcore\\10.0.11\\microsoft.entityframeworkcore.10.0.11.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.11\\microsoft.entityframeworkcore.abstractions.10.0.11.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.11\\microsoft.entityframeworkcore.analyzers.10.0.11.nupkg.sha512",
+    "C:\\Users\\Alex\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\10.0.11\\microsoft.entityframeworkcore.inmemory.10.0.11.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.11\\microsoft.entityframeworkcore.relational.10.0.11.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\10.0.11\\microsoft.entityframeworkcore.sqlite.10.0.11.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\10.0.11\\microsoft.entityframeworkcore.sqlite.core.10.0.11.nupkg.sha512",

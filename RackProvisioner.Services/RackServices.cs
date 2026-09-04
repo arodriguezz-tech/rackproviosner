@@ -12,7 +12,7 @@ public interface IInventoryService
     Task<IEnumerable<Rack>> GetAllRacksAsync();
     Task<Rack> CreateRackAsync(string serial, string position, string? sku = null, string? bom = null);
     Task<Rack?> GetRackBySerialAsync(string serial);
-    Task AddSwitchToRackAsync(int rackId, Switch @switch);
+    Task AddSwitchToRackAsync(Guid rackId, Switch @switch);
     Task<(string Status, string? Role, string Reason)> VerifyIdentityAsync(string rackSerial, string? serial, string? mac);
     Task ValidateInventoryAsync(Rack rack);
 }
@@ -92,7 +92,7 @@ public class InventoryService : IInventoryService
         return await _rackRepository.GetBySerialAsync(serial);
     }
 
-    public async Task AddSwitchToRackAsync(int rackId, Switch @switch)
+    public async Task AddSwitchToRackAsync(Guid rackId, Switch @switch)
     {
         @switch.RackId = rackId;
         @switch.CreatedAt = DateTime.UtcNow;
@@ -188,10 +188,10 @@ public class InventoryService : IInventoryService
 
 public interface ISkuService
 {
-    Task<Configuration> CreateConfigurationAsync(int rackId, string sku, string profile, string content, int majorVersion = 1, int minorVersion = 0);
-    Task<Configuration?> GetLatestConfigurationAsync(int rackId);
-    Task<Configuration?> GetConfigurationByVersionAsync(int rackId, int majorVersion, int minorVersion);
-    Task<IEnumerable<Configuration>> GetConfigurationHistoryAsync(int rackId);
+    Task<Configuration> CreateConfigurationAsync(Guid rackId, string sku, string profile, string content, int majorVersion = 1, int minorVersion = 0);
+    Task<Configuration?> GetLatestConfigurationAsync(Guid rackId);
+    Task<Configuration?> GetConfigurationByVersionAsync(Guid rackId, int majorVersion, int minorVersion);
+    Task<IEnumerable<Configuration>> GetConfigurationHistoryAsync(Guid rackId);
     Task ArchiveConfigurationAsync(int configurationId);
 }
 
@@ -207,7 +207,7 @@ public class SkuService : ISkuService
     }
 
     public async Task<Configuration> CreateConfigurationAsync(
-        int rackId,
+        Guid rackId,
         string sku,
         string profile,
         string content,
@@ -254,7 +254,7 @@ public class SkuService : ISkuService
         return config;
     }
 
-    public async Task<Configuration?> GetLatestConfigurationAsync(int rackId)
+    public async Task<Configuration?> GetLatestConfigurationAsync(Guid rackId)
     {
         return await _context.Configurations
             .Where(c => c.RackId == rackId)
@@ -263,7 +263,7 @@ public class SkuService : ISkuService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<Configuration?> GetConfigurationByVersionAsync(int rackId, int majorVersion, int minorVersion)
+    public async Task<Configuration?> GetConfigurationByVersionAsync(Guid rackId, int majorVersion, int minorVersion)
     {
         return await _context.Configurations
             .FirstOrDefaultAsync(c =>
@@ -272,7 +272,7 @@ public class SkuService : ISkuService
                 c.MinorVersion == minorVersion);
     }
 
-    public async Task<IEnumerable<Configuration>> GetConfigurationHistoryAsync(int rackId)
+    public async Task<IEnumerable<Configuration>> GetConfigurationHistoryAsync(Guid rackId)
     {
         return await _context.Configurations
             .Where(c => c.RackId == rackId)
@@ -294,7 +294,7 @@ public class SkuService : ISkuService
 public interface IDiscoveryService
 {
     Task<Switch?> DiscoverSwitchAsync(string model, string serial, string mac);
-    Task<IEnumerable<Switch>> GetDiscoveredSwitchesAsync(int rackId);
+    Task<IEnumerable<Switch>> GetDiscoveredSwitchesAsync(Guid rackId);
     Task DiscoverDeviceAsync(DiscoveryResult result);
     Task<IEnumerable<Switch>> GetDiscoveredDevicesAsync();
     Task ClearDiscoveredDevicesAsync();
@@ -344,7 +344,7 @@ public class DiscoveryService : IDiscoveryService
         return @switch;
     }
 
-    public async Task<IEnumerable<Switch>> GetDiscoveredSwitchesAsync(int rackId)
+    public async Task<IEnumerable<Switch>> GetDiscoveredSwitchesAsync(Guid rackId)
     {
         return await _switchRepository.GetByRackIdAsync(rackId);
     }
@@ -389,7 +389,7 @@ public class DiscoveryService : IDiscoveryService
 
 public interface IReadinessService
 {
-    Task EvaluateRackReadinessAsync(int rackId);
+    Task EvaluateRackReadinessAsync(Guid rackId);
 }
 
 public class ReadinessService : IReadinessService
@@ -403,7 +403,7 @@ public class ReadinessService : IReadinessService
         _eventBus = eventBus;
     }
 
-    public async Task EvaluateRackReadinessAsync(int rackId)
+    public async Task EvaluateRackReadinessAsync(Guid rackId)
     {
         var result = new ReadinessEvaluationResult { Status = "Pending" };
         _eventBus.Publish(new ReadinessEvaluatedEvent(Guid.NewGuid(), result));

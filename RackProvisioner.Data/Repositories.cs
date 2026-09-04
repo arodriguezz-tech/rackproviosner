@@ -2,18 +2,7 @@ using RackProvisioner.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace RackProvisioner.Data;
-
-public interface IRepository<T> where T : class
-{
-    Task<T?> GetByIdAsync(int id);
-    Task<IEnumerable<T>> GetAllAsync();
-    Task AddAsync(T entity);
-    Task UpdateAsync(T entity);
-    Task DeleteAsync(int id);
-    Task SaveAsync();
-}
-
-public class RackRepository : IRepository<Rack>
+public class RackRepository
 {
     private readonly RackProvisionerDbContext _context;
 
@@ -22,19 +11,19 @@ public class RackRepository : IRepository<Rack>
         _context = context;
     }
 
-    public async Task<Rack?> GetByIdAsync(int id)
+    public async Task<Rack?> GetByIdAsync(Guid id)
     {
-        return await _context.Racks.FindAsync(id);
+        return await _context.Racks.Include(r => r.Inventory).FirstOrDefaultAsync(r => r.Id == id);
     }
 
     public async Task<Rack?> GetBySerialAsync(string serial)
     {
-        return await _context.Racks.FirstOrDefaultAsync(r => r.Serial == serial);
+        return await _context.Racks.Include(r => r.Inventory).FirstOrDefaultAsync(r => r.Serial == serial);
     }
 
     public async Task<IEnumerable<Rack>> GetAllAsync()
     {
-        return await _context.Racks.ToListAsync();
+        return await _context.Racks.Include(r => r.Inventory).ToListAsync();
     }
 
     public async Task AddAsync(Rack entity)
@@ -48,7 +37,7 @@ public class RackRepository : IRepository<Rack>
         await Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(Guid id)
     {
         var rack = await GetByIdAsync(id);
         if (rack != null)
@@ -63,7 +52,7 @@ public class RackRepository : IRepository<Rack>
     }
 }
 
-public class SwitchRepository : IRepository<Switch>
+public class SwitchRepository
 {
     private readonly RackProvisionerDbContext _context;
 
@@ -77,7 +66,7 @@ public class SwitchRepository : IRepository<Switch>
         return await _context.Switches.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Switch>> GetByRackIdAsync(int rackId)
+    public async Task<IEnumerable<Switch>> GetByRackIdAsync(Guid rackId)
     {
         return await _context.Switches.Where(s => s.RackId == rackId).ToListAsync();
     }

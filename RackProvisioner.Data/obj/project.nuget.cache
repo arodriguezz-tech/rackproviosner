@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "E4zSxyZt0mE=",
+  "dgSpecHash": "QeJXzJNA2Ho=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-friendly-invention\\RackProvisioner.Data\\RackProvisioner.Data.csproj",
+  "projectFilePath": "C:\\Users\\Alex\\.copilot\\repos\\copilot-worktrees\\rackproviosner\\arodriguezz-tech-gemini-and-copilot\\RackProvisioner.Data\\RackProvisioner.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alex\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Alex\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",
